@@ -1,34 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Navbar from './components/Navbar'
+import Hero from './sections/Hero'
+import About from './sections/About'
+import Details from './sections/Details'
+import Projects from './sections/Projects'
+import Achievements from './sections/Achievements'
+import Activities from './sections/Activities'
+import Contact from './sections/Contact'
+import Footer from './components/Footer'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div className="flex items-center justify-center gap-6 py-8">
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1 className="text-3xl font-bold text-blue-500 text-center">Vite + React + Tailwind</h1>
-      <div className="card mt-6 flex flex-col items-center gap-4">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs text-center text-sm text-gray-400">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="relative min-h-screen text-white bg-grid antialiased">
+      <Navbar />
+
+      <main>
+        <Hero />
+        <About />
+        <Details />
+        <Projects />
+        <Achievements />
+        <Activities />
+        <Contact />
+      </main>
+
+      <Footer />
+    </div>
   )
 }
 

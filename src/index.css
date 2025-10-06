@@ -1,13 +1,23 @@
 @import "tailwindcss";
 
+/* Use Inter as primary font */
+:root { font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; }
+
+/* Standardize section spacing and anchor offset for fixed navbar */
+section { scroll-margin-top: 96px; }
+
+/* Center default headings and paragraphs inside sections */
+section > div > h2 { text-align: center; }
+section > div > p { text-align: center; margin-left: auto; margin-right: auto; }
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #0b0f14;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,19 +27,23 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #22d3ee;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #67e8f9;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #0b0f14;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 36px 36px, 36px 36px;
+  background-position: -1px -1px, -1px -1px;
 }
 
 h1 {
@@ -44,12 +58,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: rgba(2,6,12,0.8);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: rgba(34,211,238,0.5);
 }
 button:focus,
 button:focus-visible {
@@ -62,9 +76,38 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #06b6d4;
   }
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* ----- Futuristic Theme Additions ----- */
+html { scroll-behavior: smooth; }
+
+/* Grid background like the reference */
+.bg-grid {
+  background-color: #0b0f14; /* deep navy/black */
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 36px 36px, 36px 36px;
+  background-position: -1px -1px, -1px -1px;
+}
+
+/* Soft cyan glow utility */
+.glow {
+  box-shadow: 0 0 0 1px rgba(34,211,238,0.15), 0 0 32px rgba(34,211,238,0.12);
+}
+
+/* Radial gradient blob for futuristic accent */
+.radial-blob {
+  position: absolute;
+  inset: auto auto -10% -10%;
+  width: 40rem;
+  height: 40rem;
+  background: radial-gradient(closest-side, rgba(34,211,238,0.18), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
 }
