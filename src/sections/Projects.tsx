@@ -1,6 +1,7 @@
-import TiltCard from "../components/TiltCard";
 import NeonButton from "../components/NeonButton";
 import SectionHeader from "../components/SectionHeader";
+import ChromaGrid from "../components/ChromaGrid";
+import type { ChromaItem } from "../components/ChromaGrid";
 
 type Project = {
   title: string;
@@ -56,34 +57,40 @@ const PROJECTS: Project[] = [
 ];
 
 export default function Projects() {
+  // Map projects to ChromaGrid items
+  const chromaItems: ChromaItem[] = PROJECTS.map((p, i) => {
+    const palettes = [
+      { border: "#22D3EE", grad: "linear-gradient(145deg,#22D3EE,#000)" },
+      { border: "#06B6D4", grad: "linear-gradient(210deg,#06B6D4,#000)" },
+      { border: "#67E8F9", grad: "linear-gradient(165deg,#67E8F9,#000)" },
+      { border: "#8B5CF6", grad: "linear-gradient(225deg,#8B5CF6,#000)" },
+      { border: "#3B82F6", grad: "linear-gradient(135deg,#3B82F6,#000)" },
+      { border: "#10B981", grad: "linear-gradient(180deg,#10B981,#000)" },
+    ];
+    const palette = palettes[i % palettes.length];
+    return {
+      image: `https://picsum.photos/seed/${encodeURIComponent(p.title)}/600/400`,
+      title: p.title,
+      description: p.description,
+      subtitle: p.tags.join(" • "),
+      handle: undefined,
+      borderColor: palette.border,
+      gradient: palette.grad,
+      url: p.link || p.repo,
+    };
+  });
+
   return (
     <section id="projects" className="py-20 md:py-28 border-t border-white/10">
       <div className="max-w-6xl mx-auto px-4">
         <SectionHeader title="Projects" subtitle="Selected work that showcases my interests and skills" />
 
-        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PROJECTS.map((p) => (
-            <TiltCard key={p.title} className="">
-              <article className="group p-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.07] transition glow">
-                <h3 className="text-white font-semibold group-hover:text-cyan-300 transition">
-                  {p.title}
-                </h3>
-                <p className="mt-2 text-white/70 text-sm">{p.description}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
-                    <span key={t} className="text-xs px-2 py-1 rounded border border-cyan-400/40 text-cyan-200/90 bg-cyan-500/10">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-4">
-                  {p.link && (
-                    <NeonButton as="a" href={p.link} label="View Project" className="text-sm" />
-                  )}
-                </div>
-              </article>
-            </TiltCard>
-          ))}
+        <div className="mt-10 relative" style={{ minHeight: "620px" }}>
+          <ChromaGrid items={chromaItems} className="rounded-xl" radius={320} damping={0.45} fadeOut={0.6} ease="power3.out" />
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <NeonButton as="a" href="#contact" label="Get in touch" variant="ghost" />
         </div>
       </div>
     </section>
