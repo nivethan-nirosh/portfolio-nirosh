@@ -1,67 +1,161 @@
-import SectionHeader from "../components/SectionHeader";
+import { motion } from "framer-motion";
+import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from "react-icons/fa";
 
 export default function Contact() {
+  const contactMethods = [
+    {
+      icon: <FaEnvelope className="text-2xl text-cyan-400" />,
+      title: "Email",
+      value: "nivethanrajendran@gmail.com",
+      href: "mailto:nivethanrajendran@gmail.com"
+    },
+    {
+      icon: <FaLinkedin className="text-2xl text-cyan-400" />,
+      title: "LinkedIn",
+      value: "Nivethan Rajendran",
+      href: "http://www.linkedin.com/in/nivethan-rajendran15"
+    },
+    {
+      icon: <FaGithub className="text-2xl text-cyan-400" />,
+      title: "GitHub",
+      value: "nivethan-nirosh",
+      href: "https://github.com/nivethan-nirosh"
+    },
+    {
+      icon: <FaPhone className="text-2xl text-cyan-400" />,
+      title: "Phone",
+      value: "+94 70 52 33 414",
+      href: "tel:+94705233414"
+    }
+  ];
+
   return (
-    <section id="contact" className="py-20 md:py-28 border-t border-white/10">
-      <div className="max-w-6xl mx-auto px-4">
-        <SectionHeader title="Contact" subtitle="Like the vibe? I'm open to internship opportunities and collaborations." />
+    <section id="contact" className="relative py-24 overflow-hidden bg-transparent">
+      <div className="absolute inset-0 -z-10"></div>
+      
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 mb-4">
+            Get In Touch
+          </h2>
+          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+            I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll get back to you as soon as possible!
+          </p>
+        </motion.div>
 
-        <div className="mt-8 grid md:grid-cols-2 gap-8">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const data = new FormData(e.currentTarget as HTMLFormElement);
-              const subject = encodeURIComponent("Portfolio inquiry from " + (data.get("name") || ""));
-              const body = encodeURIComponent(
-                `Name: ${data.get("name")}\nEmail: ${data.get("email")}\n\n${data.get("message")}`
-              );
-              window.location.href = `mailto:nivethanrajendran@gmail.com?subject=${subject}&body=${body}`;
-            }}
-            className="p-5 rounded-xl border border-white/10 bg-white/5 glow"
+        <div className="grid md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="p-8 rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-white/10 shadow-xl"
           >
-            <div className="grid gap-4">
-              <input
-                name="name"
-                required
-                placeholder="Your name"
-                className="px-4 py-3 rounded-md bg-black/40 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-cyan-400/40"
-              />
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="Email address"
-                className="px-4 py-3 rounded-md bg-black/40 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-cyan-400/40"
-              />
-              <textarea
-                name="message"
-                required
-                rows={5}
-                placeholder="Tell me about your project..."
-                className="px-4 py-3 rounded-md bg-black/40 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:border-cyan-400/40"
-              />
-              <button type="submit" className="px-5 py-3 rounded-md border border-cyan-400/30 text-cyan-300 hover:bg-cyan-500/10 transition glow w-fit">
+            <h3 className="text-2xl font-semibold text-white mb-6">Send me a message</h3>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const data = new FormData(e.currentTarget as HTMLFormElement);
+                const subject = encodeURIComponent("Portfolio inquiry from " + (data.get("name") || ""));
+                const body = encodeURIComponent(
+                  `Name: ${data.get("name")}\nEmail: ${data.get("email")}\n\n${data.get("message")}`
+                );
+                window.location.href = `mailto:nivethanrajendran@gmail.com?subject=${subject}&body=${body}`;
+              }}
+              className="space-y-6"
+            >
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-cyan-200 mb-1">Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition"
+                  placeholder="Your name"
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-cyan-200 mb-1">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-cyan-200 mb-1">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  required
+                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition"
+                  placeholder="Hi Nivethan, I'd like to chat about..."
+                ></textarea>
+              </div>
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full py-3.5 px-6 rounded-lg bg-cyan-600 text-white font-medium hover:bg-cyan-500 transition-colors"
+              >
                 Send Message
-              </button>
-            </div>
-          </form>
+              </motion.button>
+            </form>
+          </motion.div>
 
-          <div className="p-5 rounded-xl border border-white/10 bg-white/5">
-            <h3 className="text-white font-semibold">Reach me</h3>
-            <ul className="mt-4 space-y-2 text-white/80">
-              <li>
-                <a className="hover:text-cyan-300" href="mailto:nivethanrajendran@gmail.com">nivethanrajendran@gmail.com</a>
-              </li>
-              <li>
-                <a className="hover:text-cyan-300" href="https://linkedin.com/in/nivethan-rajendran" target="_blank" rel="noreferrer">LinkedIn</a>
-              </li>
-              <li>
-                <a className="hover:text-cyan-300" href="https://github.com/nivethan-nirosh" target="_blank" rel="noreferrer">GitHub</a>
-              </li>
-              <li className="text-white/70">Phone: +94 (70) 52 33 414</li>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="p-8 rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-white/10 shadow-xl"
+          >
+            <h3 className="text-2xl font-semibold text-white mb-8">Contact Information</h3>
+            <p className="text-white/80 mb-8">
+              Feel free to reach out through any of these platforms. I'm open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            </p>
+            
+            <ul className="space-y-4">
+              {contactMethods.map((method, index) => (
+                <motion.li 
+                  key={index}
+                  whileHover={{ x: 5 }}
+                  className="flex items-start space-x-4 p-3 rounded-lg hover:bg-white/5 transition-colors"
+                >
+                  <div className="flex-shrink-0 mt-0.5">
+                    {method.icon}
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-cyan-300">{method.title}</h4>
+                    <a 
+                      href={method.href} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-white hover:text-cyan-200 transition-colors"
+                    >
+                      {method.value}
+                    </a>
+                  </div>
+                </motion.li>
+              ))}
             </ul>
-            <p className="mt-6 text-sm text-white/60">Replace with your real links and email.</p>
-          </div>
+
+            <div className="mt-10 pt-6 border-t border-white/10">
+              <h4 className="text-sm font-medium text-cyan-300 mb-3">Based in</h4>
+              <p className="text-white/80">Colombo, Sri Lanka</p>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

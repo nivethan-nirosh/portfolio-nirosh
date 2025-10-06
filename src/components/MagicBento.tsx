@@ -2,10 +2,10 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 
 export interface BentoCardProps {
-  color?: string;
-  title?: string;
-  description?: string;
-  label?: string;
+  color: string;
+  title: string;
+  description: string;
+  label: string;
   textAutoHide?: boolean;
   disableAnimations?: boolean;
 }
@@ -28,7 +28,6 @@ export interface BentoProps {
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
 const DEFAULT_GLOW_COLOR = '34, 211, 238'; // cyan to match theme
-const MOBILE_BREAKPOINT = 768;
 
 const createParticleElement = (x: number, y: number, color: string = DEFAULT_GLOW_COLOR): HTMLDivElement => {
   const el = document.createElement('div');
@@ -406,20 +405,93 @@ const GlobalSpotlight: React.FC<{
   return null;
 };
 
-const BentoCardGrid: React.FC<{ children: React.ReactNode; gridRef?: React.RefObject<HTMLDivElement | null> }> = ({ children, gridRef }) => (
-  <div className="bento-section grid gap-4 p-3 max-w-[72rem] select-none relative" style={{ fontSize: 'clamp(1rem, 0.9rem + 0.5vw, 1.5rem)' }} ref={gridRef}>
-    {children}
-  </div>
-);
+export interface BentoProps {
+  textAutoHide?: boolean;
+  enableStars?: boolean;
+  enableSpotlight?: boolean;
+  enableBorderGlow?: boolean;
+  disableAnimations?: boolean;
+  spotlightRadius?: number;
+  particleCount?: number;
+  enableTilt?: boolean;
+  glowColor?: string;
+  clickEffect?: boolean;
+  enableMagnetism?: boolean;
+  cards?: BentoCardProps[];
+}
 
-const useMobileDetection = () => {
+interface BentoCardGridProps {
+  children: React.ReactNode;
+  gridRef?: React.RefObject<HTMLDivElement | null>;
+}
+
+const BentoCardGrid: React.FC<BentoCardGridProps> = ({ children, gridRef }) => {
+  const isMobile = useMobileDetection();
+  
+  if (isMobile) {
+    return (
+      <div className="relative w-full">
+        <div 
+          className="bento-section flex overflow-x-auto pb-6 -mx-4 px-4 scrollbar-hide snap-x snap-mandatory" 
+          style={{
+            WebkitOverflowScrolling: 'touch',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+            scrollSnapType: 'x mandatory',
+          }}
+          ref={gridRef}
+        >
+          {React.Children.map(children, (child, index) => {
+            if (React.isValidElement<{ className?: string; style?: React.CSSProperties }>(child)) {
+              const className = child.props.className || '';
+              const style = child.props.style || {};
+              
+              if (className.includes('card-responsive')) {
+                return (
+                  <div 
+                    key={index} 
+                    className="flex-shrink-0 w-[85vw] px-2 snap-start"
+                    style={{ scrollSnapAlign: 'start' }}
+                  >
+                    {React.cloneElement(child, {
+                      className: `${className} w-full h-full`,
+                      style: { ...style, minWidth: '100%' }
+                    })}
+                  </div>
+                );
+              }
+            }
+            return child;
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div 
+      className="bento-section grid gap-4 p-3 max-w-[72rem] select-none relative" 
+      style={{ fontSize: 'clamp(1rem, 0.9rem + 0.5vw, 1.5rem)' }} 
+      ref={gridRef}
+    >
+      {children}
+    </div>
+  );
+};
+
+const useMobileDetection = (): boolean => {
   const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    const checkIfMobile = (): void => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
+
   return isMobile;
 };
 
@@ -435,19 +507,17 @@ const MagicBento: React.FC<BentoProps> = ({
   glowColor = DEFAULT_GLOW_COLOR,
   clickEffect = true,
   enableMagnetism = true,
-  cards,
+  cards = [],
 }) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobileDetection();
   const shouldDisableAnimations = disableAnimations || isMobile;
-
   const cardData: BentoCardProps[] = cards || [
     { color: '#060010', title: 'Technical', description: 'Java • C • JavaScript/TypeScript • Python', label: 'Skills' },
     { color: '#060010', title: 'Frameworks', description: 'Spring Boot • React • Angular • HTML/CSS', label: 'Stack' },
     { color: '#060010', title: 'Cloud & Tools', description: 'Docker • AWS (EC2, S3, VPC, RDS)', label: 'Cloud' },
     { color: '#060010', title: 'Data', description: 'PostgreSQL • MySQL • MongoDB • Supabase • Neon', label: 'Databases' },
     { color: '#060010', title: 'DevOps', description: 'Git • GitHub • Netlify • RabbitMQ • Kafka', label: 'Ops' },
-    { color: '#060010', title: 'Learning', description: 'Cloud-native • Testing & CI • Advanced React', label: 'Growth' },
   ];
 
   return (
