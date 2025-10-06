@@ -6,7 +6,6 @@ export default function Footer() {
         <div className="flex items-center gap-4 text-sm">
           <a href="#home" className="text-white/60 hover:text-cyan-300">Home</a>
           <a href="#about" className="text-white/60 hover:text-cyan-300">About</a>
-          <a href="#details" className="text-white/60 hover:text-cyan-300">Details</a>
           <a href="#projects" className="text-white/60 hover:text-cyan-300">Projects</a>
           <a href="#contact" className="text-white/60 hover:text-cyan-300">Contact</a>
         </div>

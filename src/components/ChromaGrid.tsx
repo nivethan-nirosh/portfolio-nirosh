@@ -151,14 +151,26 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
               <img src={c.image} alt={c.title} loading="lazy" className="w-full h-full object-cover" />
             </div>
           </div>
-
           <footer className="relative z-10 p-3 pt-1 text-white font-sans grid grid-cols-1 gap-y-2">
             <h3 className={`m-0 font-semibold ${isActive ? 'text-[1.15rem] md:text-[1.25rem]' : 'text-[1.05rem] md:text-[1.1rem] cg-clamp-1'}`}>{c.title}</h3>
             {c.description && (
               <p className={`m-0 opacity-90 leading-relaxed ${isActive ? 'text-[1rem]' : 'text-[0.95rem] cg-clamp-3'}`}>{c.description}</p>
             )}
-            <p className={`m-0 opacity-80 ${isActive ? 'text-[0.95rem]' : 'text-[0.9rem] cg-clamp-2'}`}>{c.subtitle}</p>
-
+            <div className="flex flex-wrap gap-2">
+              {(c.subtitle || '')
+                .split('•')
+                .map((t) => t.trim())
+                .filter(Boolean)
+                .slice(0, 8)
+                .map((t, idx) => (
+                  <span
+                    key={idx}
+                    className={`${isActive ? 'text-[0.8rem]' : 'text-[0.75rem]'} px-2 py-1 rounded-full border border-cyan-400/40 text-cyan-200/90 bg-cyan-500/10`}
+                  >
+                    {t}
+                  </span>
+                ))}
+            </div>
             {isActive && c.url && (
               <div className="pt-1">
                 <a
