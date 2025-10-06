@@ -1,41 +1,40 @@
 import SectionHeader from "../components/SectionHeader";
+import MagicBento from "../components/MagicBento";
 
 export default function About() {
   return (
     <section id="about" className="py-20 md:py-28 border-t border-white/10">
       <div className="max-w-6xl mx-auto px-4">
         <SectionHeader title="About Me" subtitle="Who I am and what I do" />
-        <p className="mt-6 text-white/70 max-w-3xl mx-auto text-center">
-          Motivated IT undergraduate with hands-on experience in backend software development using
-          <span className="text-cyan-300"> Java</span> and <span className="text-cyan-300">Spring Boot</span>, supported by full‑stack exposure and
-          cloud deployments on <span className="text-cyan-300">AWS</span>. Passionate about writing clean, testable code, learning agile
-          engineering practices, and building scalable systems.
+        <p className="mt-6 text-white/80 max-w-4xl mx-auto text-center text-base md:text-lg leading-relaxed">
+          Software Engineering Intern from Hatton, Sri Lanka. I build reliable backend services with
+          <span className="text-cyan-300"> Java</span> & <span className="text-cyan-300">Spring Boot</span> and ship full‑stack features with
+          <span className="text-cyan-300"> React</span> & <span className="text-cyan-300">TypeScript</span>. Comfortable with cloud on
+          <span className="text-cyan-300"> AWS</span> (EC2, S3, RDS) and containers with <span className="text-cyan-300">Docker</span>.
+          I care about clean, testable code, performance, and practical DX—while learning
+          <span className="text-cyan-300"> cloud‑native</span> patterns and <span className="text-cyan-300">advanced React</span> along the way.
         </p>
-        <div className="mt-10 grid md:grid-cols-3 gap-6">
-          <div className="p-5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/[0.07] transition glow">
-            <h3 className="text-white font-semibold">Technical</h3>
-            <ul className="mt-3 text-white/70 space-y-1 list-disc list-inside">
-              <li>Java, C, JavaScript/TypeScript, Python</li>
-              <li>Spring Boot, React, Angular, HTML/CSS</li>
-              <li>Docker, AWS (EC2, S3, VPC, RDS)</li>
-            </ul>
-          </div>
-          <div className="p-5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/[0.07] transition glow">
-            <h3 className="text-white font-semibold">Data & Tools</h3>
-            <ul className="mt-3 text-white/70 space-y-1 list-disc list-inside">
-              <li>PostgreSQL, MySQL, MongoDB</li>
-              <li>Supabase, Neon</li>
-              <li>Git, GitHub, Netlify, RabbitMQ, Kafka</li>
-            </ul>
-          </div>
-          <div className="p-5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/[0.07] transition glow">
-            <h3 className="text-white font-semibold">Currently Learning</h3>
-            <ul className="mt-3 text-white/70 space-y-1 list-disc list-inside">
-              <li>Cloud-native deployments</li>
-              <li>Testing & CI</li>
-              <li>Advanced React patterns</li>
-            </ul>
-          </div>
+        <div className="mt-10 flex justify-center">
+          <MagicBento
+            textAutoHide={false}
+            enableStars={true}
+            enableSpotlight={true}
+            enableBorderGlow={true}
+            enableTilt={true}
+            enableMagnetism={true}
+            clickEffect={true}
+            spotlightRadius={300}
+            particleCount={12}
+            glowColor="34, 211, 238"
+            cards={[
+              { color: '#060010', title: 'Technical', description: 'Java • C • TypeScript/JavaScript • Python', label: 'Skills' },
+              { color: '#060010', title: 'Frameworks', description: 'Spring Boot • React • Angular • HTML/CSS', label: 'Stack' },
+              { color: '#060010', title: 'Cloud & Tools', description: 'Docker • AWS (EC2, S3, VPC, RDS)', label: 'Cloud' },
+              { color: '#060010', title: 'Data', description: 'PostgreSQL • MySQL • MongoDB • Supabase • Neon', label: 'Databases' },
+              { color: '#060010', title: 'DevOps', description: 'Git • GitHub • Netlify • RabbitMQ • Kafka', label: 'Ops' },
+              { color: '#060010', title: 'Currently Learning', description: 'Cloud‑native • Testing & CI • Advanced React', label: 'Growth' },
+            ]}
+          />
         </div>
       </div>
     </section>
