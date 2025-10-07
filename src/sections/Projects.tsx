@@ -92,7 +92,14 @@ export default function Projects() {
   return (
     <section id="projects" className="py-20 md:py-28 border-t border-white/10">
       <div className="max-w-6xl mx-auto px-4">
-        <SectionHeader title="Projects" subtitle="Selected work that showcases my interests and skills" />
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              Projects
+            </span>
+          </h2>
+          <p className="text-white/60">Selected work that showcases my interests and skills</p>
+        </div>
 
         <div className="mt-10 relative" style={{ minHeight: "620px" }}>
           <ChromaGrid items={chromaItems} className="rounded-xl" radius={320} damping={0.45} fadeOut={0.6} ease="power3.out" />

@@ -55,7 +55,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="p-8 rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-white/10 shadow-xl"
+            className="p-8 rounded-2xl bg-transparent backdrop-blur-sm border border-white/10 shadow-xl"
           >
             <h3 className="text-2xl font-semibold text-white mb-6">Send me a message</h3>
             <form
@@ -119,7 +119,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="p-8 rounded-2xl bg-gray-900/80 backdrop-blur-sm border border-white/10 shadow-xl"
+            className="p-8 rounded-2xl bg-transparent backdrop-blur-sm border border-white/10 shadow-xl"
           >
             <h3 className="text-2xl font-semibold text-white mb-8">Contact Information</h3>
             <p className="text-white/80 mb-8">

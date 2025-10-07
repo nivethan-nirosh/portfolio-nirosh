@@ -1,11 +1,17 @@
-import SectionHeader from "../components/SectionHeader";
 import MagicBento from "../components/MagicBento";
 
 export default function About() {
   return (
     <section id="about" className="py-20 md:py-28 border-t border-white/10">
       <div className="max-w-6xl mx-auto px-4">
-        <SectionHeader title="About Me" subtitle="Who I am and what I do" />
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-2">
+            <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              About Me
+            </span>
+          </h2>
+          <p className="text-white/60">Who I am and what I do</p>
+        </div>
         <p className="mt-6 text-white/80 max-w-4xl mx-auto text-center text-base md:text-lg leading-relaxed">
           Software Engineering Intern from Hatton, Sri Lanka. I build reliable backend services with
           <span className="text-cyan-300"> Java</span> & <span className="text-cyan-300">Spring Boot</span> and ship full‑stack features with
