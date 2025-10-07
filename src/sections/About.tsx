@@ -13,13 +13,15 @@ export default function About() {
           <p className="text-white/60">Who I am and what I do</p>
         </div>
         <p className="mt-6 text-white/80 max-w-4xl mx-auto text-center text-base md:text-lg leading-relaxed">
-          Software Engineering Intern from Hatton, Sri Lanka. I build reliable backend services with
-          <span className="text-cyan-300"> Java</span> & <span className="text-cyan-300">Spring Boot</span> and ship full‑stack features with
-          <span className="text-cyan-300"> React</span> & <span className="text-cyan-300">TypeScript</span>. Comfortable with cloud on
-          <span className="text-cyan-300"> AWS</span> (EC2, S3, RDS) and containers with <span className="text-cyan-300">Docker</span>.
-          I care about clean, testable code, performance, and practical DX—while learning
-          <span className="text-cyan-300"> cloud‑native</span> patterns and <span className="text-cyan-300">advanced React</span> along the way.
+          I’m <span className="text-cyan-300">Nivethan</span>, a <span className="text-cyan-300">B.Sc. (Hons) in Information Technology undergraduate at the University of Moratuwa</span> from Colombo, Sri Lanka — passionate about building scalable, reliable, and production-ready systems.
+          I develop robust backend services with <span className="text-cyan-300">Java</span> and <span className="text-cyan-300">Spring Boot</span>, design real-time data pipelines using <span className="text-cyan-300">Kafka</span> and <span className="text-cyan-300">RabbitMQ</span>, and deliver seamless full-stack experiences with <span className="text-cyan-300">React</span> and <span className="text-cyan-300">TypeScript</span>.
+          I’m comfortable working with <span className="text-cyan-300">AWS</span> (EC2, S3, RDS, Lambda) and <span className="text-cyan-300">Docker</span> for cloud deployment and container orchestration.
+          My development approach emphasizes <span className="text-cyan-300">clean architecture</span>, <span className="text-cyan-300">SOLID principles</span>, and <span className="text-cyan-300">test-driven development</span>, ensuring high-quality, maintainable, and scalable code.
+          I’m also experienced with <span className="text-cyan-300">CI/CD pipelines</span>, <span className="text-cyan-300">Git workflows</span>, and <span className="text-cyan-300">agile</span> methodologies.
+          Currently, I’m deepening my expertise in <span className="text-cyan-300">cloud-native microservices</span> and <span className="text-cyan-300">distributed systems</span> — focusing on performance, resilience, and developer experience.
         </p>
+
+
         <div className="mt-10 flex justify-center">
           <MagicBento
             textAutoHide={false}
