@@ -58,18 +58,27 @@ const PROJECTS: Project[] = [
 
 export default function Projects() {
   // Map projects to ChromaGrid items
+  const projectImages = [
+    "/erp.png",
+    "/motionrep.png",
+    "/learnbot.png",
+    "/vite.png",
+    "/vite.png",
+    "/vite.png"
+  ];
+
   const chromaItems: ChromaItem[] = PROJECTS.map((p, i) => {
     const palettes = [
-      { border: "#22D3EE", grad: "linear-gradient(145deg,#22D3EE,#000)" },
-      { border: "#06B6D4", grad: "linear-gradient(210deg,#06B6D4,#000)" },
-      { border: "#67E8F9", grad: "linear-gradient(165deg,#67E8F9,#000)" },
-      { border: "#8B5CF6", grad: "linear-gradient(225deg,#8B5CF6,#000)" },
-      { border: "#3B82F6", grad: "linear-gradient(135deg,#3B82F6,#000)" },
-      { border: "#10B981", grad: "linear-gradient(180deg,#10B981,#000)" },
+      { border: "#3B82F6", grad: "linear-gradient(145deg,#3B82F6,#000000)" },
+      { border: "#8B5CF6", grad: "linear-gradient(210deg,#8B5CF6,#000000)" },
+      { border: "#10B981", grad: "linear-gradient(165deg,#10B981,#000000)" },
+      { border: "#F59E0B", grad: "linear-gradient(225deg,#F59E0B,#000000)" },
+      { border: "#EC4899", grad: "linear-gradient(135deg,#EC4899,#000000)" },
+      { border: "#14B8A6", grad: "linear-gradient(180deg,#14B8A6,#000000)"},
     ];
     const palette = palettes[i % palettes.length];
     return {
-      image: `https://picsum.photos/seed/${encodeURIComponent(p.title)}/600/400`,
+      image: projectImages[i],
       title: p.title,
       description: p.description,
       subtitle: p.tags.join(" • "),
