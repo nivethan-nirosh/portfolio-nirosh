@@ -104,7 +104,7 @@ export default function Contact() {
               >
                 Send Message
               </motion.button>
-              <input type="hidden" name="_next" value="https://yourdomain.com/thank-you" />
+              <input type="hidden" name="_next" value={window.location.origin} />
               <input type="hidden" name="_subject" value="New message from portfolio contact form" />
               <input type="text" name="_gotcha" style={{display: 'none'}} />
             </form>
