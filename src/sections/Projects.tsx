@@ -1,5 +1,4 @@
 import NeonButton from "../components/NeonButton";
-import SectionHeader from "../components/SectionHeader";
 import ChromaGrid from "../components/ChromaGrid";
 import type { ChromaItem } from "../components/ChromaGrid";
 
