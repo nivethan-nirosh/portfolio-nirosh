@@ -59,15 +59,8 @@ export default function Contact() {
           >
             <h3 className="text-2xl font-semibold text-white mb-6">Send me a message</h3>
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const data = new FormData(e.currentTarget as HTMLFormElement);
-                const subject = encodeURIComponent("Portfolio inquiry from " + (data.get("name") || ""));
-                const body = encodeURIComponent(
-                  `Name: ${data.get("name")}\nEmail: ${data.get("email")}\n\n${data.get("message")}`
-                );
-                window.location.href = `mailto:nivethanrajendran@gmail.com?subject=${subject}&body=${body}`;
-              }}
+              action="https://formspree.io/f/mjkaebdj"
+              method="POST"
               className="space-y-6"
             >
               <div>
@@ -111,6 +104,9 @@ export default function Contact() {
               >
                 Send Message
               </motion.button>
+              <input type="hidden" name="_next" value="https://yourdomain.com/thank-you" />
+              <input type="hidden" name="_subject" value="New message from portfolio contact form" />
+              <input type="text" name="_gotcha" style={{display: 'none'}} />
             </form>
           </motion.div>
 
