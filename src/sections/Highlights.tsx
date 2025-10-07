@@ -52,10 +52,10 @@ export default function Highlights() {
             <button
               key={key}
               onClick={() => setActiveTab(key as TabType)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
                 activeTab === key
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/50'
-                  : 'text-white/60 hover:text-white/90 hover:bg-white/5'
+                  ? 'bg-cyan-600 text-white border border-cyan-400/50 shadow-lg shadow-cyan-500/20'
+                  : 'text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/10'
               }`}
             >
               {title}
