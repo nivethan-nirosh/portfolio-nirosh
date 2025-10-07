@@ -54,8 +54,8 @@ export default function Highlights() {
               onClick={() => setActiveTab(key as TabType)}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
                 activeTab === key
-                  ? 'bg-cyan-600 text-white border border-cyan-400/50 shadow-lg shadow-cyan-500/20'
-                  : 'text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-transparent hover:border-white/10'
+                  ? 'text-cyan-400 bg-gradient-to-r from-cyan-900/40 via-cyan-800/40 to-cyan-900/40 border border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.3)] hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] backdrop-blur-sm'
+                  : 'text-cyan-300/80 hover:text-cyan-100 bg-white/0 hover:bg-white/5 border border-white/5 hover:border-cyan-400/20 transition-all duration-300'
               }`}
             >
               {title}
