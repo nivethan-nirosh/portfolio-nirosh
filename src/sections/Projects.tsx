@@ -104,20 +104,17 @@ export default function Projects() {
 
   const slideVariants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 200 : -200,
+      x: direction > 0 ? 150 : -150,
       opacity: 0,
-      scale: 0.9,
     }),
     center: {
       x: 0,
       opacity: 1,
-      scale: 1,
       zIndex: 1,
     },
     exit: (direction: number) => ({
-      x: direction < 0 ? 200 : -200,
+      x: direction < 0 ? 150 : -150,
       opacity: 0,
-      scale: 0.9,
       zIndex: 0,
     }),
   };
@@ -167,28 +164,28 @@ export default function Projects() {
         >
           {/* Card Display */}
           <div className="relative h-[420px] sm:h-[450px] md:h-[480px] flex items-center justify-center px-2 sm:px-8 md:px-12">
-            {/* Glow */}
+            {/* Glow - simplified */}
             <div
-              className="absolute inset-0 opacity-20 md:opacity-30 blur-2xl md:blur-3xl transition-colors duration-500"
-              style={{ background: `radial-gradient(circle, ${activeProject.color}40 0%, transparent 70%)` }}
+              className="absolute inset-0 opacity-15 blur-2xl transition-colors duration-300"
+              style={{ background: `radial-gradient(circle, ${activeProject.color}40 0%, transparent 60%)` }}
             />
 
             {/* Arrows - Hidden on very small screens */}
             <button
               onClick={() => paginate(-1)}
-              className="absolute left-0 z-20 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all hidden sm:flex"
+              className="absolute left-0 z-20 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-colors duration-150 hidden sm:flex"
             >
               <FaChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
             </button>
             <button
               onClick={() => paginate(1)}
-              className="absolute right-0 z-20 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all hidden sm:flex"
+              className="absolute right-0 z-20 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-colors duration-150 hidden sm:flex"
             >
               <FaChevronRight className="w-4 h-4 md:w-5 md:h-5" />
             </button>
 
             {/* Card with Swipe Support */}
-            <AnimatePresence initial={false} custom={direction} mode="wait">
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
               <motion.div
                 key={activeIndex}
                 custom={direction}
@@ -198,27 +195,24 @@ export default function Projects() {
                 exit="exit"
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.7}
-                onDragEnd={(_, { offset, velocity }) => {
-                  const swipe = Math.abs(offset.x) * velocity.x;
-                  if (swipe < -5000 || offset.x < -100) {
+                dragElastic={0.3}
+                onDragEnd={(_, { offset }) => {
+                  if (offset.x < -50) {
                     paginate(1);
-                  } else if (swipe > 5000 || offset.x > 100) {
+                  } else if (offset.x > 50) {
                     paginate(-1);
                   }
                 }}
                 onDragStart={() => setIsPaused(true)}
-                onDrag={() => setIsPaused(true)}
                 transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  x: { type: "tween", duration: 0.25, ease: "easeOut" },
                   opacity: { duration: 0.2 },
-                  scale: { duration: 0.2 },
                 }}
-                className="absolute w-full max-w-lg md:max-w-2xl"
+                className="absolute w-full max-w-lg md:max-w-2xl will-change-transform"
+                style={{ transform: 'translateZ(0)' }}
               >
                 <div
                   className="relative rounded-xl md:rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0f]"
-                  style={{ boxShadow: `0 0 40px ${activeProject.color}15` }}
                 >
                   {/* Badge */}
                   <div
@@ -238,6 +232,7 @@ export default function Projects() {
                       src={activeProject.image}
                       alt={activeProject.title}
                       className="w-full h-full object-cover"
+                      loading="eager"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/50 to-transparent" />
                   </div>

@@ -20,7 +20,8 @@ export default function Hero() {
       "Tech Explorer",
       "Full Stack Development Practitioner",
       "AI Enthusiast",
-      "Problem Solver"
+      "Turning Ideas Into Impact",
+      "Curiosity-Fueled Creator"
     ],
     loop: true,
     deleteSpeed: 40,
