@@ -1,162 +1,205 @@
 import { motion, useAnimation } from "framer-motion";
-import { useTypewriter, Cursor } from "react-simple-typewriter";
 import { useEffect } from "react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { Cursor, useTypewriter } from "react-simple-typewriter";
+import ParticleField from "../components/ParticleField";
 import PixelTransition from "../components/PixelTransition";
 
 export default function Hero() {
   const controls = useAnimation();
 
   useEffect(() => {
-    const sequence = async () => {
-      await controls.start({
-        y: [0, -15, 0],
-        transition: {
-          duration: 8,
-          repeat: Infinity,
-          repeatType: 'reverse',
-          ease: 'easeInOut',
-        },
-      });
-    };
-    sequence();
+    controls.start({
+      y: [0, -10, 0],
+      transition: { duration: 6, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' },
+    });
   }, [controls]);
 
   const [text] = useTypewriter({
     words: [
-      "Cloud. Code. Creativity.",
-      "Intelligent systems.",
-      "Simple experiences",
-      "Data-driven. User-focused.",
-      "From design to deployment."
+      "Tech Explorer",
+      "Full Stack Development Practitioner",
+      "AI Enthusiast",
+      "Problem Solver"
     ],
     loop: true,
-    deleteSpeed: 50,
-    delaySpeed: 2000,
+    deleteSpeed: 40,
+    delaySpeed: 2500,
   });
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden py-20">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-black/80 to-black/40" />
-      </div>
+    <section id="home" className="relative min-h-screen flex items-start md:items-center overflow-hidden">
+      <ParticleField />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="container relative z-10 pt-40 sm:pt-32 pb-16 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          {/* Profile Photo - Show first on mobile */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-6 text-center lg:text-left"
+            className="relative flex justify-center order-1 lg:order-2 mt-12 lg:mt-0"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-400/30">
-              <span className="h-2 w-2 rounded-full bg-cyan-400 mr-2" />
-              Available for new opportunities
-            </div>
+            <div className="relative">
+              {/* Glow */}
+              <motion.div
+                className="absolute -inset-6 md:-inset-8 rounded-3xl opacity-40"
+                style={{
+                  background: 'radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, transparent 70%)',
+                }}
+                animate={controls}
+              />
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-              <span className="block">Hello, I'm</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-                Nivethan Rajendran
-              </span>
-              <div className="h-6 mt-2">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 text-xl sm:text-2xl">
-                  {text}
-                  <Cursor cursorColor="#06b6d4" />
-                </span>
+              {/* Photo Card */}
+              <div className="relative glass-card-strong p-1.5 md:p-2 rounded-xl md:rounded-2xl">
+                <PixelTransition
+                  firstContent={
+                    <img
+                      src="/nirosh.jpg"
+                      alt="Nivethan Rajendran"
+                      className="w-full h-full object-cover"
+                    />
+                  }
+                  secondContent={
+                    <div className="w-full h-full bg-gradient-to-br from-[#00d4ff]/20 to-[#6366f1]/20 flex items-center justify-center p-6 md:p-8">
+                      <div className="text-center">
+                        <p className="text-[#00d4ff] text-xs md:text-sm font-medium mb-2 md:mb-3 tracking-widest uppercase">Undergraduate</p>
+                        <h3 className="text-xl md:text-2xl font-bold text-white mb-1">Nivethan</h3>
+                        <h3 className="text-lg md:text-xl font-bold text-[#00d4ff] mb-2">Rajendran</h3>
+                        <p className="text-white/60 text-xs md:text-sm">University of Moratuwa</p>
+                        <div className="flex justify-center gap-3 mt-4 md:mt-6">
+                          <a
+                            href="https://github.com/nivethan-nirosh"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-lg bg-white/10 hover:bg-[#00d4ff]/20 transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <FaGithub className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                          </a>
+                          <a
+                            href="https://linkedin.com/in/nivethan-rajendran"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-lg bg-white/10 hover:bg-[#00d4ff]/20 transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <FaLinkedin className="w-4 h-4 md:w-5 md:h-5 text-white" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  gridSize={10}
+                  pixelColor="rgba(0, 212, 255, 0.8)"
+                  className="w-[220px] h-[280px] sm:w-[280px] sm:h-[350px] md:w-[320px] md:h-[400px] rounded-lg md:rounded-xl overflow-hidden"
+                />
               </div>
-            </h1>
-
-            <p className="text-lg text-white/80 max-w-xl mx-auto lg:mx-0">
-              I'm a B.Sc (hons) in Information Technology Undergraduate at University of Moratuwa, passionate about
-              creating elegant solutions to complex problems.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 justify-center lg:justify-start">
-              <motion.a
-                href="#contact"
-                whileHover={{ y: -2, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-8 py-3.5 rounded-md bg-cyan-600 text-white font-medium hover:bg-cyan-700 transition-all w-full sm:w-auto text-center text-sm tracking-wide border border-cyan-500/30"
-              >
-                Get In Touch
-              </motion.a>
-              <motion.a
-                href="#projects"
-                whileHover={{ y: -2, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-8 py-3.5 rounded-md border border-cyan-400/30 text-white font-medium hover:bg-cyan-500/10 transition-all w-full sm:w-auto text-center text-sm tracking-wide"
-              >
-                View Projects
-              </motion.a>
             </div>
           </motion.div>
 
+          {/* Text Content */}
           <motion.div
-            className="relative flex justify-center mt-12 lg:mt-0"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              transition: {
-                duration: 0.8,
-                ease: "easeOut",
-                delay: 0.2
-              }
-            }}
+            className="space-y-6 md:space-y-8 text-center lg:text-left order-2 lg:order-1"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="relative">
-              <motion.div
-                className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 blur-xl opacity-70"
-                animate={controls}
-              />
-              <PixelTransition
-                firstContent={
-                  <img
-                    src="/nirosh.jpg"
-                    alt="Nivethan Rajendran"
-                    className="w-full h-full object-cover"
-                  />
-                }
-                secondContent={
-                  <div className="w-full h-full bg-gradient-to-br from-cyan-900/90 to-blue-900/90 flex items-center justify-center p-6">
-                    <div className="text-center">
-                      <p className="text-cyan-300 text-sm font-mono mb-2">Hello, I'm</p>
-                      <h3 className="text-2xl font-bold text-white mb-2">Nivethan</h3>
-                      <p className="text-cyan-100 text-sm">IT Undergraduate</p>
-                      <div className="mt-4 flex justify-center space-x-3">
-                        <a
-                          href="https://github.com/nivethan-nirosh"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-white hover:text-cyan-300 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <span className="sr-only">GitHub</span>
-                          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                          </svg>
-                        </a>
-                        <a
-                          href="https://linkedin.com/in/nivethan-rajendran"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-white hover:text-cyan-300 transition-colors"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <span className="sr-only">LinkedIn</span>
-                          <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                          </svg>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                }
-                gridSize={8}
-                pixelColor="rgba(8, 145, 178, 0.7)"
-                className="w-[320px] h-[400px] rounded-2xl overflow-hidden border-2 border-white/10 shadow-2xl"
-              />
+            {/* Status */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <span className="status-badge text-xs md:text-sm">Open to Work</span>
+            </motion.div>
+
+            {/* Name */}
+            <div>
+              <motion.p
+                className="text-white/60 text-base md:text-lg mb-1 md:mb-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+              >
+                Hi, I'm
+              </motion.p>
+              <motion.h1
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.6 }}
+              >
+                Nivethan
+                <br />
+                <span className="text-[#00d4ff]">Rajendran</span>
+              </motion.h1>
             </div>
+
+            {/* Typewriter */}
+            <motion.div
+              className="h-7 md:h-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9 }}
+            >
+              <span className="text-lg sm:text-xl md:text-2xl text-[#00d4ff] font-medium">
+                {text}
+                <Cursor cursorColor="#00d4ff" />
+              </span>
+            </motion.div>
+
+            {/* Description */}
+            <motion.p
+              className="text-white/50 text-base md:text-lg max-w-lg mx-auto lg:mx-0 leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              B.Sc. (Hons) Information Technology undergraduate, Faculty of Information Technology, University of Moratuwa.
+            </motion.p>
+
+
+            {/* CTAs */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1 }}
+            >
+              <a href="#contact" className="btn-primary text-sm md:text-base">
+                Get in Touch
+              </a>
+              <a href="#projects" className="btn-secondary text-sm md:text-base">
+                View Work
+              </a>
+            </motion.div>
+
+            {/* Social */}
+            <motion.div
+              className="flex gap-4 justify-center lg:justify-start pt-2 md:pt-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+            >
+              <a
+                href="https://github.com/nivethan-nirosh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 md:p-3 rounded-lg border border-white/10 text-white/50 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all"
+              >
+                <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
+              </a>
+              <a
+                href="https://linkedin.com/in/nivethan-rajendran"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 md:p-3 rounded-lg border border-white/10 text-white/50 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all"
+              >
+                <FaLinkedin className="w-4 h-4 md:w-5 md:h-5" />
+              </a>
+            </motion.div>
           </motion.div>
         </div>
       </div>

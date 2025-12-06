@@ -1,13 +1,44 @@
+import { FaGithub, FaHeart, FaLinkedin, FaMedium } from "react-icons/fa";
+
 export default function Footer() {
   return (
-    <footer className="mt-20 border-t border-white/10 py-10">
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-white/50 text-sm">© {new Date().getFullYear()} Nivethan Rajendran. All rights reserved.</p>
-        <div className="flex items-center gap-4 text-sm">
-          <a href="#home" className="text-white/60 hover:text-cyan-300">Home</a>
-          <a href="#about" className="text-white/60 hover:text-cyan-300">About</a>
-          <a href="#projects" className="text-white/60 hover:text-cyan-300">Projects</a>
-          <a href="#contact" className="text-white/60 hover:text-cyan-300">Contact</a>
+    <footer className="py-8 border-t border-white/5">
+      <div className="container">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+          <a href="#home" className="text-white/80 hover:text-[#00d4ff] transition-colors font-medium">
+            Nivethan Rajendran<span className="text-[#00d4ff]">.</span>
+          </a>
+
+          <p className="flex items-center gap-1 text-white/40">
+            Made with <FaHeart className="w-3 h-3 text-[#00d4ff]" /> in Sri Lanka
+          </p>
+
+          <div className="flex items-center gap-3">
+            <a
+              href="https://github.com/nivethan-nirosh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 hover:text-[#00d4ff] transition-colors"
+            >
+              <FaGithub className="w-4 h-4" />
+            </a>
+            <a
+              href="https://linkedin.com/in/nivethan-rajendran15"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 hover:text-[#00d4ff] transition-colors"
+            >
+              <FaLinkedin className="w-4 h-4" />
+            </a>
+            <a
+              href="https://medium.com/@nivethanrajendran"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/40 hover:text-[#00d4ff] transition-colors"
+            >
+              <FaMedium className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

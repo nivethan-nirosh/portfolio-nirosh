@@ -1,156 +1,152 @@
-import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from "react-icons/fa";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { FaCheck, FaEnvelope, FaGithub, FaLinkedin, FaPaperPlane, FaPhone } from "react-icons/fa";
+
+const contacts = [
+  { icon: <FaEnvelope />, label: "Email", value: "nivethanrajendran@gmail.com", href: "mailto:nivethanrajendran@gmail.com" },
+  { icon: <FaLinkedin />, label: "LinkedIn", value: "nivethan-rajendran", href: "https://linkedin.com/in/nivethan-rajendran15" },
+  { icon: <FaGithub />, label: "GitHub", value: "nivethan-nirosh", href: "https://github.com/nivethan-nirosh" },
+  { icon: <FaPhone />, label: "Phone", value: "+94 70 52 33 414", href: "tel:+94705233414" },
+];
 
 export default function Contact() {
-  const contactMethods = [
-    {
-      icon: <FaEnvelope className="text-2xl text-cyan-400" />,
-      title: "Email",
-      value: "nivethanrajendran@gmail.com",
-      href: "mailto:nivethanrajendran@gmail.com"
-    },
-    {
-      icon: <FaLinkedin className="text-2xl text-cyan-400" />,
-      title: "LinkedIn",
-      value: "Nivethan Rajendran",
-      href: "http://www.linkedin.com/in/nivethan-rajendran15"
-    },
-    {
-      icon: <FaGithub className="text-2xl text-cyan-400" />,
-      title: "GitHub",
-      value: "nivethan-nirosh",
-      href: "https://github.com/nivethan-nirosh"
-    },
-    {
-      icon: <FaPhone className="text-2xl text-cyan-400" />,
-      title: "Phone",
-      value: "+94 70 52 33 414",
-      href: "tel:+94705233414"
-    }
-  ];
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const form = e.currentTarget;
+    try {
+      await fetch("https://formspree.io/f/mjkaebdj", {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+      setIsSubmitted(true);
+      form.reset();
+    } catch { /* */ }
+    setIsSubmitting(false);
+  };
 
   return (
-    <section id="contact" className="relative py-24 overflow-hidden bg-transparent">
-      <div className="absolute inset-0 -z-10"></div>
-      
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" ref={sectionRef} className="py-16 md:py-24 lg:py-32 relative">
+      <div className="container">
+        {/* Header */}
         <motion.div
+          className="section-header"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 mb-4">
-            Get In Touch
+          <h2 className="section-title text-2xl sm:text-3xl md:text-4xl">
+            Get in <span className="text-[#00d4ff]">Touch</span>
           </h2>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
-            I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll get back to you as soon as possible!
+          <p className="section-subtitle text-sm md:text-base">
+            Let's discuss your next project
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
+          {/* Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="p-8 rounded-2xl bg-transparent backdrop-blur-sm border border-white/10 shadow-xl"
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 0.2 }}
+            className="glass-card p-5 md:p-6 lg:p-8"
           >
-            <h3 className="text-2xl font-semibold text-white mb-6">Send me a message</h3>
-            <form
-              action="https://formspree.io/f/mjkaebdj"
-              method="POST"
-              className="space-y-6"
-            >
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-cyan-200 mb-1">Name</label>
+            {isSubmitted ? (
+              <div className="text-center py-6 md:py-8">
+                <div className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-3 md:mb-4 rounded-full bg-[#00d4ff]/20 flex items-center justify-center">
+                  <FaCheck className="w-4 h-4 md:w-5 md:h-5 text-[#00d4ff]" />
+                </div>
+                <p className="text-white font-medium mb-1 text-sm md:text-base">Message Sent!</p>
+                <p className="text-white/50 text-xs md:text-sm mb-3 md:mb-4">I'll get back to you soon.</p>
+                <button
+                  onClick={() => setIsSubmitted(false)}
+                  className="text-[#00d4ff] text-xs md:text-sm hover:underline"
+                >
+                  Send another
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
                 <input
-                  id="name"
                   name="name"
                   type="text"
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition"
-                  placeholder="Your name"
+                  placeholder="Name"
+                  className="input-field text-sm md:text-base"
                 />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-cyan-200 mb-1">Email</label>
                 <input
-                  id="email"
                   name="email"
                   type="email"
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition"
-                  placeholder="your.email@example.com"
+                  placeholder="Email"
+                  className="input-field text-sm md:text-base"
                 />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-cyan-200 mb-1">Message</label>
                 <textarea
-                  id="message"
                   name="message"
-                  rows={5}
+                  rows={3}
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent transition"
-                  placeholder="Hi Nivethan, I'd like to chat about..."
-                ></textarea>
-              </div>
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.02, boxShadow: '0 0 15px rgba(8, 145, 178, 0.4)' }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-3.5 px-6 rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-600 text-white font-medium hover:from-cyan-600 hover:to-cyan-700 transition-all duration-300 border border-cyan-400/50 shadow-lg shadow-cyan-500/20"
-              >
-                Send Message
-              </motion.button>
-              <input type="hidden" name="_next" value={window.location.origin} />
-              <input type="hidden" name="_subject" value="New message from portfolio contact form" />
-              <input type="text" name="_gotcha" style={{display: 'none'}} />
-            </form>
+                  placeholder="Message"
+                  className="input-field resize-none text-sm md:text-base"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="btn-primary w-full disabled:opacity-50 text-sm md:text-base"
+                >
+                  {isSubmitting ? (
+                    'Sending...'
+                  ) : (
+                    <>Send Message <FaPaperPlane className="w-3 h-3 md:w-3.5 md:h-3.5" /></>
+                  )}
+                </button>
+              </form>
+            )}
           </motion.div>
 
+          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="p-8 rounded-2xl bg-transparent backdrop-blur-sm border border-white/10 shadow-xl"
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 0.3 }}
+            className="space-y-3 md:space-y-4"
           >
-            <h3 className="text-2xl font-semibold text-white mb-8">Contact Information</h3>
-            <p className="text-white/80 mb-8">
-              Feel free to reach out through any of these platforms. I'm open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-            </p>
-            
-            <ul className="space-y-4">
-              {contactMethods.map((method, index) => (
-                <motion.li 
-                  key={index}
-                  whileHover={{ x: 5 }}
-                  className="flex items-start space-x-4 p-3 rounded-lg hover:bg-white/5 transition-colors"
-                >
-                  <div className="flex-shrink-0 mt-0.5">
-                    {method.icon}
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-medium text-cyan-300">{method.title}</h4>
-                    <a 
-                      href={method.href} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-white hover:text-cyan-200 transition-colors"
-                    >
-                      {method.value}
-                    </a>
-                  </div>
-                </motion.li>
-              ))}
-            </ul>
+            {contacts.map((c, i) => (
+              <motion.a
+                key={c.label}
+                href={c.href}
+                target={c.href.startsWith('http') ? '_blank' : undefined}
+                rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg border border-white/5 bg-white/[0.02] hover:border-[#00d4ff]/20 hover:bg-[#00d4ff]/5 transition-all group"
+                initial={{ opacity: 0, y: 10 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.4 + i * 0.1 }}
+              >
+                <div className="p-1.5 md:p-2 rounded-lg bg-[#00d4ff]/10 text-[#00d4ff] text-sm md:text-base">
+                  {c.icon}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-white/40 text-[10px] md:text-xs">{c.label}</p>
+                  <p className="text-white/80 text-xs md:text-sm group-hover:text-[#00d4ff] transition-colors truncate">
+                    {c.value}
+                  </p>
+                </div>
+              </motion.a>
+            ))}
 
-            <div className="mt-10 pt-6 border-t border-white/10">
-              <h4 className="text-sm font-medium text-cyan-300 mb-3">Based in</h4>
-              <p className="text-white/80">Colombo, Sri Lanka</p>
-            </div>
+            <motion.div
+              className="pt-3 md:pt-4 text-center text-white/30 text-xs md:text-sm"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.8 }}
+            >
+               Based in Colombo, Sri Lanka
+            </motion.div>
           </motion.div>
         </div>
       </div>
