@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { FaCertificate, FaTrophy, FaUsers } from 'react-icons/fa';
 
 type TabType = 'achievements' | 'certifications' | 'activities';
@@ -42,6 +42,10 @@ export default function Highlights() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
+  const handleTabChange = useCallback((key: TabType) => {
+    setActiveTab(key);
+  }, []);
+
   return (
     <section id="highlights" ref={sectionRef} className="py-16 md:py-24 lg:py-32 relative">
       <div className="container">
@@ -70,21 +74,22 @@ export default function Highlights() {
           {tabs.map(([key, { label, icon }]) => (
             <button
               key={key}
-              onClick={() => setActiveTab(key)}
-              className={`relative px-2.5 sm:px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-[11px] sm:text-xs md:text-sm font-medium flex items-center gap-1.5 md:gap-2 transition-all ${activeTab === key
-                ? 'text-[#00d4ff]'
-                : 'text-white/50 hover:text-white/70'
+              onClick={() => handleTabChange(key)}
+              className={`relative px-2.5 sm:px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-[11px] sm:text-xs md:text-sm font-medium flex items-center gap-1.5 md:gap-2 transition-colors duration-150 ${activeTab === key
+                  ? 'text-[#00d4ff]'
+                  : 'text-white/50 hover:text-white/70'
                 }`}
             >
               {activeTab === key && (
                 <motion.div
                   layoutId="tabBg"
-                  className="absolute inset-0 bg-[#00d4ff]/10 border border-[#00d4ff]/20 rounded-lg"
-                  transition={{ type: "spring", duration: 0.4 }}
+                  className="absolute inset-0 bg-[#00d4ff]/10 border border-[#00d4ff]/20 rounded-lg will-change-transform"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  style={{ transform: 'translateZ(0)' }}
                 />
               )}
-              <span className="relative">{icon}</span>
-              <span className="relative hidden sm:inline">{label}</span>
+              <span className="relative z-10">{icon}</span>
+              <span className="relative z-10 hidden sm:inline">{label}</span>
             </button>
           ))}
         </motion.div>
@@ -94,25 +99,27 @@ export default function Highlights() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
               className="space-y-2 md:space-y-3"
             >
               {tabData[activeTab].items.map((item, i) => (
-                <motion.div
+                <div
                   key={item.title}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="flex items-center justify-between p-3 md:p-4 rounded-lg border border-white/5 bg-white/[0.02] hover:border-[#00d4ff]/20 hover:bg-[#00d4ff]/5 transition-all"
+                  className="flex items-center justify-between p-3 md:p-4 rounded-lg border border-white/5 bg-white/[0.02] hover:border-[#00d4ff]/20 hover:bg-[#00d4ff]/5 transition-colors duration-150"
+                  style={{
+                    opacity: 1,
+                    transform: 'translateZ(0)',
+                    animationDelay: `${i * 30}ms`
+                  }}
                 >
                   <span className="text-white/80 text-xs sm:text-sm">{item.title}</span>
                   {item.year && (
                     <span className="text-white/30 text-[10px] md:text-xs ml-2 shrink-0">{item.year}</span>
                   )}
-                </motion.div>
+                </div>
               ))}
             </motion.div>
           </AnimatePresence>

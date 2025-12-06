@@ -25,7 +25,7 @@ const PROJECTS: Project[] = [
   {
     id: 2,
     title: "MotionRep – Business Operations Platform",
-    description: "Live platform with text.lk SMS API integration, AWS RDS, Docker & Kubernetes deployments. Currently in production.",
+    description: "Live platform with text SMS API integration, AWS (RDS, EC2, VPC), Docker & Kubernetes deployments.",
     tags: ["Next.js", "Express.js", "AWS", "Docker"],
     image: "/motionrep.png",
     link: "https://github.com/nivethan-nirosh/MotionRep",
@@ -52,7 +52,7 @@ const PROJECTS: Project[] = [
     id: 5,
     title: "Happy Events – Event Management",
     description: "UI/UX, authentication, 3D object integration, and CRUD operations.",
-    tags: ["HTML", "Bootstrap", "Three.js", "MySQL"],
+    tags: ["HTML,CSS & js", "Ballerina", "Three.js", "MySQL"],
     image: "https://mbqpiysownpbwgdkuhgf.supabase.co/storage/v1/object/public/axzell/ballerina.jpg",
     link: "https://github.com/thushanth24/iwb479-coding-ninjas",
     color: "#ec4899",
@@ -61,7 +61,7 @@ const PROJECTS: Project[] = [
     id: 6,
     title: "SafeCarry Plus – IoT Smart Suitcase",
     description: "IoT-based smart chemical-carrying suitcase with ESP32, fingerprint lock, GPS tracking, real-time monitoring, and remote unlock.",
-    tags: ["ESP32", "Arduino", "Firebase", "GPS"],
+    tags: ["ESP32", "NEO M9N", "Firebase", "R307 FS"],
     image: "https://mbqpiysownpbwgdkuhgf.supabase.co/storage/v1/object/public/axzell/IoTproject.jpg",
     color: "#f59e0b",
   },
@@ -69,7 +69,7 @@ const PROJECTS: Project[] = [
     id: 7,
     title: "AI-Powered Automobile Service Management",
     description: "Custom ML model for appointment prediction, Kafka-driven polyglot microservices monitoring, containerized deployment.",
-    tags: ["Spring Boot", "FastAPI", "Kafka", "Docker"],
+    tags: ["Spring Boot", "FastAPI", "Kafka", "Docker", "K8s"],
     image: "https://mbqpiysownpbwgdkuhgf.supabase.co/storage/v1/object/public/axzell/EAD.jpg",
     link: "https://github.com/nivethan-nirosh/Automobile-Service-Management-System",
     color: "#ef4444",
@@ -164,32 +164,30 @@ export default function Projects() {
           transition={{ delay: 0.3 }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setTimeout(() => setIsPaused(false), 3000)}
         >
           {/* Card Display */}
-          <div className="relative h-[420px] sm:h-[450px] md:h-[480px] flex items-center justify-center px-8 md:px-12">
+          <div className="relative h-[420px] sm:h-[450px] md:h-[480px] flex items-center justify-center px-2 sm:px-8 md:px-12">
             {/* Glow */}
             <div
               className="absolute inset-0 opacity-20 md:opacity-30 blur-2xl md:blur-3xl transition-colors duration-500"
               style={{ background: `radial-gradient(circle, ${activeProject.color}40 0%, transparent 70%)` }}
             />
 
-            {/* Arrows */}
+            {/* Arrows - Hidden on very small screens */}
             <button
               onClick={() => paginate(-1)}
-              className="absolute left-0 z-20 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all"
+              className="absolute left-0 z-20 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all hidden sm:flex"
             >
               <FaChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
             </button>
             <button
               onClick={() => paginate(1)}
-              className="absolute right-0 z-20 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all"
+              className="absolute right-0 z-20 p-2 md:p-3 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all hidden sm:flex"
             >
               <FaChevronRight className="w-4 h-4 md:w-5 md:h-5" />
             </button>
 
-            {/* Card */}
+            {/* Card with Swipe Support */}
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={activeIndex}
@@ -198,6 +196,19 @@ export default function Projects() {
                 initial="enter"
                 animate="center"
                 exit="exit"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.7}
+                onDragEnd={(_, { offset, velocity }) => {
+                  const swipe = Math.abs(offset.x) * velocity.x;
+                  if (swipe < -5000 || offset.x < -100) {
+                    paginate(1);
+                  } else if (swipe > 5000 || offset.x > 100) {
+                    paginate(-1);
+                  }
+                }}
+                onDragStart={() => setIsPaused(true)}
+                onDrag={() => setIsPaused(true)}
                 transition={{
                   x: { type: "spring", stiffness: 300, damping: 30 },
                   opacity: { duration: 0.2 },
