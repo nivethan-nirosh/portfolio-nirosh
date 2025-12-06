@@ -83,6 +83,16 @@ export default function Projects() {
   const [direction, setDirection] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Preload all project images for faster display
+  useEffect(() => {
+    PROJECTS.forEach((project) => {
+      if (project.image.startsWith('http')) {
+        const img = new Image();
+        img.src = project.image;
+      }
+    });
+  }, []);
+
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {

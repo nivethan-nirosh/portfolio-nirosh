@@ -1,46 +1,45 @@
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
-import { FaAws, FaDocker, FaJava, FaPython, FaReact, FaTerminal } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { FaAws, FaDocker, FaJava, FaPython, FaReact, FaTerminal, FaTrash } from "react-icons/fa";
 import { SiApachekafka, SiFastapi, SiKubernetes, SiPostgresql, SiSpringboot, SiTypescript } from "react-icons/si";
 
 // Interactive Terminal commands
 const TERMINAL_COMMANDS = [
   {
-  cmd: "whoami",
-  output: [
-    "Nivethan Rajendran",
-    "Information Technology Undergraduate | University of Moratuwa"
-  ]
-},
-{
-  cmd: "cat skills.json",
-  output: [
-    '{ "languages": ["Python", "Java", "JavaScript", "TypeScript"] }',
-    '{ "frameworks": ["Spring Boot", "FastAPI", "React"] }',
-    '{ "databases": ["PostgreSQL", "MongoDB"] }',
-    '{ "cloud": ["AWS (EC2, RDS, VPC, Lambda)"] }',
-    '{ "technologies": ["Kafka", "MCP", "RAG", "Docker", "Git", "Linux"] }'
-  ]
-},
-{
-  cmd: "cat experience.txt",
-  output: [
-    "→ B.Sc. (Hons) Information Technology – University of Moratuwa",
-    "→ Strong understanding of core Computer Science fundamentals",
-    "→ Clean Architecture & SOLID principles",
-    "→ Data Structures | Algorithms | System Design Basics"
-  ]
-},
-{
-  cmd: "./run_passion.sh",
-  output: [
-    "▶ Learning and building real-world applications...",
-    "▶ Exploring scalable system development...",
-    "▶ Experimenting with cloud and AI-driven solutions...",
-    "✓ Growing every day and ready for new challenges!"
-  ]
-}
-
+    cmd: "whoami",
+    output: [
+      "Nivethan Rajendran",
+      "Information Technology Undergraduate | University of Moratuwa"
+    ]
+  },
+  {
+    cmd: "cat skills.json",
+    output: [
+      '{ "languages": ["Python", "Java", "JavaScript", "TypeScript"] }',
+      '{ "frameworks": ["Spring Boot", "FastAPI", "React"] }',
+      '{ "databases": ["PostgreSQL", "MongoDB"] }',
+      '{ "cloud": ["AWS (EC2, RDS, VPC, Lambda)"] }',
+      '{ "technologies": ["Kafka", "MCP", "RAG", "Docker", "Git", "Linux"] }'
+    ]
+  },
+  {
+    cmd: "cat experience.txt",
+    output: [
+      "→ B.Sc. (Hons) Information Technology – University of Moratuwa",
+      "→ Strong understanding of core Computer Science fundamentals",
+      "→ Clean Architecture & SOLID principles",
+      "→ Data Structures | Algorithms | System Design Basics"
+    ]
+  },
+  {
+    cmd: "./run_passion.sh",
+    output: [
+      "▶ Learning and building real-world applications...",
+      "▶ Exploring scalable system development...",
+      "▶ Experimenting with cloud and AI-driven solutions...",
+      "✓ Growing every day and ready for new challenges!"
+    ]
+  }
 ];
 
 function InteractiveTerminal() {
@@ -73,6 +72,13 @@ function InteractiveTerminal() {
 
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
+  };
+
+  const clearTerminal = () => {
+    if (!isTyping) {
+      setHistory([]);
+      setCurrentOutput([]);
     }
   };
 
@@ -128,46 +134,85 @@ function InteractiveTerminal() {
             onClick={() => runCommand(command)}
             disabled={isTyping}
             className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-mono rounded-lg border transition-all ${isTyping
-                ? 'border-white/5 text-white/30 cursor-not-allowed'
-                : 'border-[#00d4ff]/30 text-[#00d4ff] hover:bg-[#00d4ff]/10 hover:border-[#00d4ff]/50'
+              ? 'border-white/5 text-white/30 cursor-not-allowed'
+              : 'border-[#00d4ff]/30 text-[#00d4ff] hover:bg-[#00d4ff]/10 hover:border-[#00d4ff]/50'
               }`}
           >
             $ {command.cmd}
           </button>
         ))}
+        {/* Clear Button */}
+        <button
+          onClick={clearTerminal}
+          disabled={isTyping || history.length === 0}
+          className={`px-2 md:px-3 py-1 md:py-1.5 text-[10px] md:text-xs font-mono rounded-lg border transition-all flex items-center gap-1 ${isTyping || history.length === 0
+              ? 'border-white/5 text-white/20 cursor-not-allowed'
+              : 'border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500/50'
+            }`}
+        >
+          <FaTrash className="w-2.5 h-2.5" />
+          clear
+        </button>
       </div>
     </motion.div>
   );
 }
 
-// Tech nodes with better Kafka color
+// Tech nodes
 const techNodes = [
-  { id: 1, icon: <FaJava />, name: "Java", x: 12, y: 18, color: "#ED8B00", connections: [2, 3, 7] },
-  { id: 2, icon: <SiSpringboot />, name: "Spring Boot", x: 32, y: 12, color: "#6DB33F", connections: [1, 3, 4] },
-  { id: 3, icon: <SiApachekafka />, name: "Kafka", x: 52, y: 22, color: "#FF6B35", connections: [1, 2, 5, 12] },
-  { id: 4, icon: <FaDocker />, name: "Docker", x: 72, y: 15, color: "#2496ED", connections: [2, 5, 6] },
-  { id: 5, icon: <SiKubernetes />, name: "K8s", x: 88, y: 35, color: "#326CE5", connections: [3, 4, 6] },
-  { id: 6, icon: <FaAws />, name: "AWS", x: 75, y: 55, color: "#FF9900", connections: [4, 5, 9] },
-  { id: 7, icon: <FaReact />, name: "React", x: 22, y: 48, color: "#61DAFB", connections: [1, 8, 10] },
-  { id: 8, icon: <SiTypescript />, name: "TypeScript", x: 42, y: 52, color: "#3178C6", connections: [7, 9, 10] },
-  { id: 9, icon: <SiPostgresql />, name: "PostgreSQL", x: 58, y: 72, color: "#4169E1", connections: [6, 8, 11] },
-  { id: 10, icon: <FaPython />, name: "Python", x: 18, y: 72, color: "#3776AB", connections: [7, 8, 11, 12] },
-  { id: 11, icon: <FaTerminal />, name: "RAG/MCP", x: 38, y: 85, color: "#00d4ff", connections: [9, 10] },
-  { id: 12, icon: <SiFastapi />, name: "FastAPI", x: 82, y: 78, color: "#009688", connections: [3, 10] },
+  { id: 1, icon: <FaJava />, name: "Java", x: 12, y: 15, color: "#ED8B00", connections: [2, 3, 7] },
+  { id: 2, icon: <SiSpringboot />, name: "Spring Boot", x: 32, y: 10, color: "#6DB33F", connections: [1, 3, 4] },
+  { id: 3, icon: <SiApachekafka />, name: "Kafka", x: 52, y: 18, color: "#FF6B35", connections: [1, 2, 5, 12] },
+  { id: 4, icon: <FaDocker />, name: "Docker", x: 72, y: 12, color: "#2496ED", connections: [2, 5, 6] },
+  { id: 5, icon: <SiKubernetes />, name: "K8s", x: 88, y: 30, color: "#326CE5", connections: [3, 4, 6] },
+  { id: 6, icon: <FaAws />, name: "AWS", x: 75, y: 50, color: "#FF9900", connections: [4, 5, 9] },
+  { id: 7, icon: <FaReact />, name: "React", x: 22, y: 42, color: "#61DAFB", connections: [1, 8, 10] },
+  { id: 8, icon: <SiTypescript />, name: "TypeScript", x: 42, y: 48, color: "#3178C6", connections: [7, 9, 10] },
+  { id: 9, icon: <SiPostgresql />, name: "PostgreSQL", x: 58, y: 65, color: "#e42b2bff", connections: [6, 8, 11] },
+  { id: 10, icon: <FaPython />, name: "Python", x: 18, y: 65, color: "#e5d81eff", connections: [7, 8, 11, 12] },
+  { id: 11, icon: <FaTerminal />, name: "RAG/MCP", x: 38, y: 78, color: "#5900ffff", connections: [9, 10] },
+  { id: 12, icon: <SiFastapi />, name: "FastAPI", x: 82, y: 72, color: "#009688", connections: [3, 10] },
 ];
 
 function TechConstellation() {
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
   const [activeNode, setActiveNode] = useState<number | null>(null);
+  const [autoHighlight, setAutoHighlight] = useState<number | null>(null);
+
+  // Auto-highlight random nodes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!hoveredNode && !activeNode) {
+        const randomId = Math.floor(Math.random() * techNodes.length) + 1;
+        setAutoHighlight(randomId);
+        setTimeout(() => setAutoHighlight(null), 1500);
+      }
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [hoveredNode, activeNode]);
 
   const getConnectedNodes = (nodeId: number) => {
     const node = techNodes.find(n => n.id === nodeId);
     return node?.connections || [];
   };
 
+  const isNodeActive = (nodeId: number) => {
+    if (hoveredNode === nodeId || activeNode === nodeId) return true;
+    if (hoveredNode && getConnectedNodes(hoveredNode).includes(nodeId)) return true;
+    if (autoHighlight === nodeId || (autoHighlight && getConnectedNodes(autoHighlight).includes(nodeId))) return true;
+    return false;
+  };
+
+  const isLineActive = (nodeId: number, targetId: number) => {
+    if (hoveredNode === nodeId || hoveredNode === targetId) return true;
+    if (activeNode === nodeId || activeNode === targetId) return true;
+    if (autoHighlight === nodeId || autoHighlight === targetId) return true;
+    return false;
+  };
+
   return (
     <motion.div
-      className="relative w-full h-[300px] md:h-[400px] rounded-xl md:rounded-2xl border border-white/10 bg-[#050508] overflow-hidden"
+      className="relative w-full h-[350px] md:h-[450px] rounded-xl md:rounded-2xl border border-white/10 bg-[#050508] overflow-hidden"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
@@ -184,14 +229,14 @@ function TechConstellation() {
           node.connections.map(targetId => {
             const target = techNodes.find(n => n.id === targetId);
             if (!target || targetId < node.id) return null;
-            const isActive = hoveredNode === node.id || hoveredNode === targetId || activeNode === node.id || activeNode === targetId;
+            const lineActive = isLineActive(node.id, targetId);
             return (
               <motion.line
                 key={`line-${node.id}-${targetId}`}
                 x1={`${node.x}%`} y1={`${node.y}%`}
                 x2={`${target.x}%`} y2={`${target.y}%`}
-                stroke={isActive ? "#00d4ff" : "rgba(255,255,255,0.08)"}
-                strokeWidth={isActive ? 1.5 : 0.5}
+                stroke={lineActive ? "#00d4ff" : "rgba(255,255,255,0.08)"}
+                strokeWidth={lineActive ? 1.5 : 0.5}
                 initial={{ pathLength: 0, opacity: 0 }}
                 whileInView={{ pathLength: 1, opacity: 1 }}
                 viewport={{ once: true }}
@@ -204,8 +249,7 @@ function TechConstellation() {
 
       {/* Nodes */}
       {techNodes.map((node, index) => {
-        const isConnected = hoveredNode ? getConnectedNodes(hoveredNode).includes(node.id) : false;
-        const isActive = hoveredNode === node.id || activeNode === node.id || isConnected;
+        const isActive = isNodeActive(node.id);
 
         return (
           <motion.div
