@@ -80,7 +80,7 @@ export default function Hero() {
                             <FaGithub className="w-4 h-4 md:w-5 md:h-5 text-white" />
                           </a>
                           <a
-                            href="https://linkedin.com/in/nivethan-rajendran"
+                            href="https://linkedin.com/in/nivethan-rajendran15"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="p-2 rounded-lg bg-white/10 hover:bg-[#00d4ff]/20 transition-colors"
@@ -193,7 +193,7 @@ export default function Hero() {
                 <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
               </a>
               <a
-                href="https://linkedin.com/in/nivethan-rajendran"
+                href="https://linkedin.com/in/nivethan-rajendran15"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2.5 md:p-3 rounded-lg border border-white/10 text-white/50 hover:text-[#00d4ff] hover:border-[#00d4ff]/30 transition-all"

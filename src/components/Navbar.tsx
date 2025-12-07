@@ -59,12 +59,23 @@ export default function Navbar() {
   const handleNavClick = (href: string) => {
     setActive(href);
     setOpen(false);
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
   };
 
   const toggleMenu = () => {
-    setOpen(!open);
-    document.body.style.overflow = !open ? 'hidden' : 'auto';
+    const newOpen = !open;
+    setOpen(newOpen);
+    if (newOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
   };
 
   return (
@@ -73,7 +84,8 @@ export default function Navbar() {
       <div
         className={`md:hidden fixed inset-0 z-[100] bg-[#030305] transition-opacity duration-200 ease-out ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
-        style={{ transform: 'translateZ(0)' }}
+        style={{ transform: 'translateZ(0)', touchAction: 'none' }}
+        onTouchMove={(e) => e.preventDefault()}
       >
         {/* Close button */}
         <button
@@ -94,8 +106,8 @@ export default function Navbar() {
               href={link.href}
               onClick={() => handleNavClick(link.href)}
               className={`text-2xl font-semibold transition-colors duration-150 ${active === link.href
-                  ? 'text-[#00d4ff]'
-                  : 'text-white/50 active:text-white'
+                ? 'text-[#00d4ff]'
+                : 'text-white/50 active:text-white'
                 }`}
             >
               {link.label}
@@ -131,8 +143,8 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setActive(link.href)}
                   className={`relative text-sm font-medium transition-colors duration-150 ${active === link.href
-                      ? 'text-[#00d4ff]'
-                      : 'text-white/60 hover:text-white'
+                    ? 'text-[#00d4ff]'
+                    : 'text-white/60 hover:text-white'
                     }`}
                 >
                   {link.label}

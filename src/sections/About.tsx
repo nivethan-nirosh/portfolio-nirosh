@@ -15,11 +15,11 @@ const TERMINAL_COMMANDS = [
   {
     cmd: "cat skills.json",
     output: [
-      '{ "languages": ["Python", "Java", "JavaScript", "TypeScript"] }',
+      '{ "languages": ["Python", "Java", "JavaScript"] }',
       '{ "frameworks": ["Spring Boot", "FastAPI", "React"] }',
       '{ "databases": ["PostgreSQL", "MongoDB"] }',
-      '{ "cloud": ["AWS (EC2, RDS, VPC, Lambda)"] }',
-      '{ "technologies": ["Kafka", "MCP", "RAG", "Docker", "Git", "Linux"] }'
+      '{ "cloud": ["AWS (EC2, RDS, VPC, Lambda), Supabase"] }',
+      '{ "technologies": ["Kafka", "MCP", "RAG", "Docker","K8s", "Git", "Linux"] }'
     ]
   },
   {
