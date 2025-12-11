@@ -11,11 +11,23 @@ type BlogPost = {
     readTime: string;
     link: string;
     platform: "medium" | "linkedin";
+    isNew?: boolean;
 };
 
 const BLOG_POSTS: BlogPost[] = [
     {
         id: 1,
+        title: "Implementing RAG in Spring Boot Applications",
+        excerpt: "A comprehensive guide to building Retrieval-Augmented Generation systems with Spring Boot and vector databases.",
+        category: "AI/ML",
+        date: "Dec 2024",
+        readTime: "12 min",
+        link: "https://medium.com/@nivethanrajendran/implementing-retrieval-augmented-generation-rag-in-spring-boot-applications-34b5d3384720",
+        platform: "medium",
+        isNew: true,
+    },
+    {
+        id: 2,
         title: "A Gentle Introduction to RAG — You Can Learn It Today!",
         excerpt: "Learn the fundamentals of RAG architecture and how it enhances LLMs with external knowledge.",
         category: "AI/ML",
@@ -25,7 +37,7 @@ const BLOG_POSTS: BlogPost[] = [
         platform: "medium",
     },
     {
-        id: 2,
+        id: 3,
         title: "PayHere Integration with Spring Boot: Step-by-Step Guide",
         excerpt: "Complete guide to integrating PayHere payment gateway with Spring Boot applications.",
         category: "Backend",
@@ -86,6 +98,16 @@ export default function Blog() {
                                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                                 style={{ background: `linear-gradient(135deg, ${categoryColors[post.category]}15 0%, transparent 50%)` }}
                             />
+
+                            {/* NEW Badge */}
+                            {post.isNew && (
+                                <div className="absolute top-3 right-3 md:top-4 md:right-4 z-10">
+                                    <span className="relative flex items-center gap-1 px-2 py-0.5 text-[10px] md:text-xs font-bold text-white bg-gradient-to-r from-[#ec4899] to-[#f97316] rounded-full">
+                                        <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#ec4899] to-[#f97316] animate-pulse opacity-50" />
+                                        <span className="relative">NEW</span>
+                                    </span>
+                                </div>
+                            )}
 
                             <div className="relative p-4 md:p-6 lg:p-8">
                                 {/* Top Row */}
